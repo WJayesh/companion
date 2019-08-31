@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:async';
 import 'package:companion/Database.dart';
 import 'package:flutter/material.dart';
 import 'package:companion/ClientModel.dart';
@@ -62,7 +63,8 @@ void initState(){
     if (currentBackPressTime == null || 
         now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      
+      final snackBar = SnackBar(content: Text('Press it twice to exit'));
+      Scaffold.of(context).showSnackBar(snackBar);
       return Future.value(false);
     }
     return Future.value(true);
@@ -70,7 +72,10 @@ void initState(){
 
   @override
   Widget build(BuildContext context){
-    return Material(
+    return WillPopScope(
+    onWillPop: onWillPop,  
+    child:
+    Material(
     
       
     child:(client==null)?Container(child: Text("Loading...",textAlign: TextAlign.center,),):
@@ -152,7 +157,8 @@ void initState(){
       )
       ],
       )
-      );
+      )
+    );
       
   }
 
