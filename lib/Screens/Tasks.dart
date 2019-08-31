@@ -33,7 +33,7 @@ void initState(){
 
   bool isDepressed(){
     if(client.q1==null) return false;
-    if(client.q1<3)
+    if(client.q1<10)
     return true;
     return false;
   }
@@ -56,7 +56,17 @@ void initState(){
     // setState(() { 
     // });
   }
-  
+  DateTime currentBackPressTime;
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null || 
+        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
 
   @override
   Widget build(BuildContext context){
@@ -70,6 +80,14 @@ void initState(){
         (!client.answered && !timeUp) ? askQuestion() : Container(),
         Flexible(child:ListView(
           children: <Widget>[
+            (!isDepressed() && client.answered)?
+            ListTile(
+                contentPadding: EdgeInsets.all(10.0),
+                title: Image.asset("assets/celebrate.png",width: 250,height: 250,) ,
+                subtitle: Text.rich(TextSpan(text:"You're doing great!"),
+                        style: TextStyle(fontWeight:FontWeight.bold ),
+                        textAlign: TextAlign.center,),
+              ): Container(),
             (isDepressed() && client.notDone1)? 
             GestureDetector(
               onDoubleTap: () {
@@ -178,4 +196,5 @@ void initState(){
       margin: EdgeInsets.all(12.0),
     );
   }
+  
 }
