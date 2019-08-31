@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:io';
 import 'dart:async';
 import 'package:companion/Database.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,7 @@ void initState(){
       Scaffold.of(context).showSnackBar(snackBar);
       return Future.value(false);
     }
+    exit(0);
     return Future.value(true);
   }
 

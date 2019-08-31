@@ -118,6 +118,13 @@ void initState(){
         },
         ),
         ListTile(
+        title: Text('Log Out',
+          style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.normal),),
+        onTap: () {
+        Navigator.of(context).pushNamed("/");
+        },
+        ),
+        ListTile(
         title: Text('Clear All Accounts',
           style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.normal),),
         onTap: () async {
